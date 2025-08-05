@@ -19,6 +19,40 @@ Both algorithms use ε-greedy exploration (ε = 0.1), learning rate α = 0.5, di
 
 ---
 
+## Problem Specification
+
+### Environment
+- **Terminal states:** 0 and 4 (reward = 0)
+- **Penalties:**
+  - Reward = -1 for any action (including wall collisions and normal moves between white cells)
+  - Entering red states (10, 11, 13, 14) yields reward = -20 and resets the agent to state 20
+
+### Objectives
+- Learn the optimal policy using:
+  1. Sarsa (on-policy)
+  2. Q-learning (off-policy)
+- Plot a trajectory of movement under the learned optimal policies for comparison
+
+### Constraints
+- Use an ε-greedy action selection strategy (ε = 0.1)
+
+### Approach & Assumptions
+- **States:** 25 total, numbered 0–24 and arranged as follows:
+  ```
+  [ 0  1  2  3  4]
+  [ 5  6  7  8  9]
+  [10 11 12 13 14]
+  [15 16 17 18 19]
+  [20 21 22 23 24]
+  ```
+- **Policy:** a length‑25 vector where each entry indicates the best action for its corresponding state
+- **Action-value function:** a 25×4 matrix; each row corresponds to a state, each column to an action
+- **Actions encoding:**
+  - 0 = up
+  - 1 = down
+  - 2 = left
+  - 3 = right
+
 ## Installation
 
 1. Clone this repository:
