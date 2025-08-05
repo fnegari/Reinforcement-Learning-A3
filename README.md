@@ -155,12 +155,3 @@ The script will:
 
 Completed by **Fatemeh Negari** and **Saba Tamizi** for RL Course (6650).
 
----
-
-## 📫 Contact
-
-For issues or questions, open an issue or contact:
-`your.email@domain.com` • [GitHub](https://github.com/your-username)
-
-```
-```
