@@ -1,157 +1,98 @@
-```markdown
 # Reinforcement Learning Assignment 3
 
-This repository contains the implementation of **Sarsa** and **Q-learning** algorithms for a 5×5 GridWorld problem, submitted for the Reinforcement Learning course (Course Number: 6650) at Memorial University.  
-**Assignment 3 — Due August 5, 2025**
+**Course**: Reinforcement Learning (6650) at Memorial University\
+**Due Date**: August 5, 2025
 
 ---
 
-## 📖 Overview
+## Overview
 
-- **Goal:** Learn optimal policies for a 5×5 GridWorld using on-policy (Sarsa) and off-policy (Q-learning) methods.  
-- **Action selection:** ε-greedy (ε = 0.1)  
-- **Training:** 300 episodes, α = 0.5, γ = 0.95  
-- **Outputs:**  
-  - Optimal policy grids  
-  - Trajectories under greedy policy  
-  - Reward-per-episode plots  
-  - PNG files for inclusion in the report
+This repository implements the Sarsa and Q-learning algorithms on a 5×5 GridWorld. The goal is to learn optimal policies navigating from the start state (20) to one of two terminal states (0 or 4) while avoiding high-penalty red states.
 
----
+- **Environment**: 5×5 grid, indexed 0–24
+- **Start**: 20 (bottom-left)
+- **Terminal**: 0 & 4 (top corners, reward = 0)
+- **Red states**: 10, 11, 13, 14 (penalty = -20; reset to start)
+- **Normal moves**: reward = -1; wall collisions = -1
 
-## 🌐 GridWorld Environment
-
-```
-
-0   1   2   3   4
-5   6   7   8   9
-10  11  12  13  14
-15  16  17  18  19
-20  21  22  23  24
-
-````
-
-- **Start:** State 20 (bottom-left)  
-- **Terminal:** States 0, 4 (top row) reward = 0  
-- **Red states:** 10, 11, 13, 14 (reward = –20, reset to 20)  
-- **Rewards:**  
-  - Normal move (white cell): –1  
-  - Wall collision: –1  
-  - Red cell: –20 + reset  
-  - Terminal: 0  
+Both algorithms use ε-greedy exploration (ε = 0.1), learning rate α = 0.5, discount factor γ = 0.95, and run for 300 episodes with a fixed random seed for reproducibility.
 
 ---
 
-## ⚙️ Implementation
+## Installation
 
-- **Sarsa (On-Policy):**
-
-  \[
-  Q(s,a) \leftarrow Q(s,a) + \alpha \bigl[r + \gamma\,Q(s',a') - Q(s,a)\bigr]
-  \]
-
-- **Q-learning (Off-Policy):**
-
-  \[
-  Q(s,a) \leftarrow Q(s,a) + \alpha \bigl[r + \gamma\,\max_{a'} Q(s',a') - Q(s,a)\bigr]
-  \]
-
-- **ε-greedy:**  
-  - 10% random action  
-  - 90% best action
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/[your-username]/rl-assignment3.git
+   cd rl-assignment3
+   ```
+2. Create a Python 3 environment and install dependencies:
+   ```bash
+   pip install numpy matplotlib
+   ```
 
 ---
 
-## 🛠 Prerequisites
+## Usage
 
-- **Python 3.6+**  
-- **NumPy**  
-- **Matplotlib**
-
-```bash
-pip install numpy matplotlib
-````
-
----
-
-## 📥 Installation
-
-```bash
-git clone https://github.com/[your-username]/rl-assignment3.git
-cd rl-assignment3
-```
-
-Verify that `untitled15.py` is present and dependencies are installed.
-
----
-
-## ▶️ How to Run
+Run the main script to train both agents, generate trajectories, and plot results:
 
 ```bash
 python untitled15.py
 ```
 
-The script will:
+This will:
 
-1. Seed RNG for reproducibility (`np.random.seed(42)`).
-2. Train Sarsa and Q-learning for 300 episodes.
-3. Save plots as:
-
-   * `sarsa_trajectory.png`
-   * `qlearning_trajectory.png`
-   * `sarsa_rewards.png`
-   * `qlearning_rewards.png`
-   * `combined_rewards.png`
-4. Print policies, trajectories, and reward analysis to console.
-
----
-
-## 🎯 Expected Outputs
-
-* **Trajectories (Greedy after training):**
-
-  * **Sarsa:**
-
-    ```
-    20 → 21 → 22 → 17 → 12 → 7 → 2 → 1 → 0  (8 steps)
-    ```
-  * **Q-learning:**
-
-    ```
-    20 → 21 → 16 → 17 → 12 → 7 → 6 → 5 → 0  (8 steps)
-    ```
-
-* **Reward Analysis (last 50 episodes):**
-
-  * Sarsa: **–19.70**
-  * Q-learning: **–13.34**
+- Seed the RNG with `np.random.seed(42)`
+- Train Sarsa and Q-learning for 300 episodes
+- Save the following plots in the working directory:
+  - `sarsa_trajectory.png`
+  - `qlearning_trajectory.png`
+  - `sarsa_rewards.png`
+  - `qlearning_rewards.png`
+  - `combined_rewards.png`
+- Print learned policies, example trajectories, and reward statistics to the console
 
 ---
 
-## 📊 Results Summary
+## Implementation Details
 
-| Algorithm      | Trajectory                       | Avg. Reward (Last 50 Eps) | Notes                          |
-| -------------- | -------------------------------- | ------------------------: | ------------------------------ |
-| **Sarsa**      | 20→21→22→17→12→7→2→1→0 (8 steps) |                    –19.70 | On-policy, safer path          |
-| **Q-learning** | 20→21→16→17→12→7→6→5→0 (8 steps) |                    –13.34 | Off-policy, faster convergence |
-
----
-
-## 🔄 Reproducibility
-
-* **Random Seed:** `np.random.seed(42)`
-* **Parameters:**
-
-  * Learning rate (α): 0.5
-  * Discount factor (γ): 0.95
-  * Exploration rate (ε): 0.1
-  * Episodes: 300
-* **Note:** Deterministic environment; only ε-greedy introduces randomness.
-* **Tip:** Increase episodes (e.g., 1000) or reduce ε (e.g., 0.05) for better convergence (optimal \~–6 to –8).
+- **State representation**: integer 0–24 in row-major order
+- **Actions**: 0 = Up, 1 = Down, 2 = Left, 3 = Right
+- **Sarsa update**: \(Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma Q(s',a') - Q(s,a)]\)
+- **Q-learning update**: \(Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]\)
+- **ε-greedy policy**: 10% random, 90% greedy
 
 ---
 
-## 🙏 Credits
+## Results Summary
 
-Completed by **Fatemeh Negari** and **Saba Tamizi** for RL Course (6650).
+| Algorithm      | Trajectory (States)              | Avg. Reward (Last 50) | Notes                          |
+| -------------- | -------------------------------- | --------------------- | ------------------------------ |
+| **Sarsa**      | 20→21→22→17→12→7→2→1→0 (8 steps) | -19.70                | On-policy, safer paths         |
+| **Q-learning** | 20→21→16→17→12→7→6→5→0 (8 steps) | -13.34                | Off-policy, faster convergence |
+
+*Average rewards converge toward -6 to -8; increasing episodes or reducing ε can improve performance.*
+
+---
+
+## Reproducibility
+
+- **Random Seed**: `np.random.seed(42)`
+- **Parameters**:
+  - Learning rate (α): 0.5
+  - Discount factor (γ): 0.95
+  - Exploration rate (ε): 0.1
+  - Episodes: 300
+
+---
+
+## Credits
+
+- **Authors**: Fatemeh Negari & Saba Tamizi
+- **Contact**: [fnegari@mun.ca]
+
+---
+
+*Feel free to open issues or submit pull requests!*
 
