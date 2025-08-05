@@ -1,6 +1,9 @@
 Reinforcement Learning Assignment 3
+
 This repository contains the implementation of Sarsa and Q-learning algorithms for a 5x5 GridWorld problem as part of the Reinforcement Learning course (Course Number: 6650) Assignment 3.
+
 Project Description
+
 The GridWorld is a 5x5 grid where an agent starts at state 20 (blue square) and aims to reach one of the terminal states (0 or 4, black squares) while avoiding red states (10, 11, 13, 14). Red states incur a -20 reward and reset the agent to the starting state. Normal moves yield a -1 reward, and terminal states yield a 0 reward. The goal is to learn optimal policies using Sarsa and Q-learning algorithms with an ε-greedy action selection strategy (ε = 0.1).
 The code implements:
 
