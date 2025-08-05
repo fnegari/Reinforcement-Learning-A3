@@ -22,21 +22,25 @@ Both algorithms use ε-greedy exploration (ε = 0.1), learning rate α = 0.5, di
 ## Problem Specification
 
 ### Environment
+
 - **Terminal states:** 0 and 4 (reward = 0)
 - **Penalties:**
   - Reward = -1 for any action (including wall collisions and normal moves between white cells)
   - Entering red states (10, 11, 13, 14) yields reward = -20 and resets the agent to state 20
 
 ### Objectives
+
 - Learn the optimal policy using:
   1. Sarsa (on-policy)
   2. Q-learning (off-policy)
 - Plot a trajectory of movement under the learned optimal policies for comparison
 
 ### Constraints
+
 - Use an ε-greedy action selection strategy (ε = 0.1)
 
 ### Approach & Assumptions
+
 - **States:** 25 total, numbered 0–24 and arranged as follows:
   ```
   [ 0  1  2  3  4]
@@ -57,8 +61,8 @@ Both algorithms use ε-greedy exploration (ε = 0.1), learning rate α = 0.5, di
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/[your-username]/rl-assignment3.git
-   cd rl-assignment3
+   git clone https://github.com/fnegari/Reinforcement-Learning-A3.git
+   cd Reinforcement-Learning-A3
    ```
 2. Create a Python 3 environment and install dependencies:
    ```bash
@@ -124,7 +128,7 @@ This will:
 ## Credits
 
 - **Authors**: Fatemeh Negari & Saba Tamizi
-- **Contact**: [fnegari@mun.ca]
+- **Contact**: [fnegari@mun.ca](mailto\:fnegari@mun.ca)
 
 ---
 
